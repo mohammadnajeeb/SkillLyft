@@ -7,6 +7,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 from sentence_transformers import SentenceTransformer, util
 import json
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables
 
 app = Flask(__name__)
 CORS(app)
@@ -245,4 +248,5 @@ def health_check():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3001)
+    port = int(os.environ.get('PORT', 3001))
+    app.run(host='0.0.0.0', port=port)

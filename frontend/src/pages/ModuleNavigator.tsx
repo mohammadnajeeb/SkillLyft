@@ -5,7 +5,7 @@ type Tab = 'intro' | 'theory' | 'equation' | 'code';
 
 export default function ModuleNavigator() {
   const [activeTab, setActiveTab] = useState<Tab>('intro');
-  const [progress, setProgress] = useState(0);
+  const [progress] = useState(0);
   const [notes, setNotes] = useState('');
 
   const tabs: { id: Tab; name: string }[] = [

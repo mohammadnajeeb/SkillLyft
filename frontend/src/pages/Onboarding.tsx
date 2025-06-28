@@ -2,11 +2,8 @@ import { useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ChevronDownIcon,
-  QuestionMarkCircleIcon,
-  MapIcon,
   AcademicCapIcon,
-  BookOpenIcon,
-  ClockIcon
+  BookOpenIcon
 } from '@heroicons/react/24/outline';
 import CodeEditor from '../components/CodeEditor';
 

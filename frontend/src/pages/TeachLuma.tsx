@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import { Dialog, Transition } from '@headlessui/react';
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import { BlockMath } from 'react-katex';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -190,6 +190,12 @@ const ComplexEditorDialog = ({
 export default function TeachLuma() {
   const navigate = useNavigate();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to bottom of messages
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const [isComplexEditorOpen, setIsComplexEditorOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -205,8 +211,25 @@ export default function TeachLuma() {
   const audioRef = useRef<MediaRecorder | null>(null);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
 
+  // Teaching function
+  const handleTeach = () => {
+    scrollToBottom();
+  };
+
+  // Chat function
+  const handleChat = (content: string, type: Message['type'] = 'text') => {
+    // Add user message
+    const userMessage: Message = {
+      role: 'user',
+      content,
+      type,
+    };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    scrollToBottom();
+  };
+
   // Handle teaching submission
-  const handleTeach = async (content: string) => {
+  const handleTeachSubmit = async (content: string) => {
     try {
       setIsLoading(true);
       
@@ -269,7 +292,7 @@ export default function TeachLuma() {
   };
 
   // Handle chat messages
-  const handleChat = async (content: string) => {
+  const handleChatSubmit = async (content: string) => {
     try {
       setIsLoading(true);
       
